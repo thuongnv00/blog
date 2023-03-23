@@ -1,0 +1,13 @@
+.narbar-items {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+img {
+    width: 100px;
+    padding-left: 0 px;
+    left: 0px;
+}
+.narbar-items {
+    flex-grow: 1;
+}
