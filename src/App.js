@@ -6,8 +6,8 @@ import Test from './component/authen/signup/Test';
 function App() {
   return (
     <div>
-      <LoginForm/>
-      {/* <Test/> */}
+      {/* <LoginForm/> */}
+      <Test/>
     </div>
   );
 }
