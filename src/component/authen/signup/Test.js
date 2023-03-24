@@ -1,44 +1,58 @@
-import { Button } from "@mui/material";
 import '../signup/Test.css'
 import React from "react";
 import { red } from "@mui/material/colors";
+import { Avatar, Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText, Grid, Input, InputLabel, Link, Paper, TextField, Typography } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { CheckBox } from '@mui/icons-material';
 export default function Test() {
+
+    const pages = [
+        {
+            badge: 'Bài viết',
+            navigate: 'following'
+        },
+        {
+            badge: 'Hỏi đáp',
+            navigate: 'question'
+        },
+        {
+            badge: 'Thảo luận',
+            navigate: 'discusion'
+        }
+    ];
+
+
+    const paperStyle = { width: 350, height: '75vh', margin: "20px auto", padding: "20px" }
+    const avatarStyle = { backgroundColor: "green" }
+
+
     return (<>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="#" style={{color:"red"}}>Navbar</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Link</a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#" style={{color:red}}>Action</a></li>
-                                <li><a className="dropdown-item" href="#">Another action</a></li>
-                                <li><hr className="dropdown-divider"/></li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled">Disabled</a>
-                        </li>
-                    </ul>
-                    <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"></input>
-                            <button className="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
-            </div>
-        </nav>
+        <Grid>
+            <Paper elevation={10} style={paperStyle} >
+                <Grid align="center">
+                    <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
+                    <h2>Sigin</h2>
+                </Grid>
+                <TextField required variant="standard" label="username" placeholder='enter the username' fullWidth />
+                <TextField required variant="standard" type='password' label="password" placeholder='enter the password' fullWidth />
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
+                </FormGroup>
+                <Button type='submit' style={{ margin: "10px 0" }} fullWidth variant="contained" >Sign in</Button>
+                <Typography>
+                    <Link href='/'>Forgot password</Link>
+                </Typography><br />
+                <Typography> Don't have a account. Let's
+                    <Link href='/'> signup</Link>
+                </Typography>
+
+                <FormControl>
+                    <InputLabel htmlFor="my-input">Email address</InputLabel>
+                    <Input id="my-input" aria-describedby="my-helper-text" />
+                    <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
+                </FormControl>
+
+            </Paper>
+        </Grid>
     </>)
 }

@@ -12,10 +12,3 @@ code {
     monospace;
 }
 
-body { 
-  background: url('/src/component/authen/signup/greg-rakozy-vw3Ahg4x1tY-unsplash.jpg') no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
