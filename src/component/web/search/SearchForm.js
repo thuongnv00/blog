@@ -50,7 +50,7 @@ export default function SearchForm() {
         <Container>
             <Grid sx={{ marginTop: 20, textAlign: 'center' }}>
                 <TextField size="small" placeholder="search..." ariant="outlined" name='param' onChange={onChangeParam} ></TextField>
-                <Button onClick={onSearch} variant="contained" size="small" sx={{ boxShadow: 'none', alignItems: 'center', backgroundColor: 'none !important' }}>
+                <Button onClick={onSearch} variant="contained"  sx={{ boxShadow: 'none', alignItems: 'center', backgroundColor: 'none !important' }}>
                     <SearchIcon></SearchIcon>
                 </Button>
 

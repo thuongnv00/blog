@@ -60,7 +60,7 @@ export default function SignupForm() {
         }
     }
 
-    let paperStyle = { width: "350px", height: "65vh", padding: "20px"}
+    let paperStyle = { width: "350px", height: "85vh", padding: "20px"}
     let avatarStyle = { backgroundColor: "#9c27b0", marginBottom: "10px" }
     let fieldStyle = { paddingBottom: "20px" }
 
