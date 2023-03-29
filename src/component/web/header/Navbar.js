@@ -7,6 +7,7 @@ import '../header/Navbar.css'
 import avatar from '../header/man.png'
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import PersonIcon from '@mui/icons-material/Person';
 
 
 
@@ -40,15 +41,15 @@ export default function Navbar() {
     };
 
 
-    const logout =() => {
+    const logout = () => {
         localStorage.removeItem('token');
         window.location.reload()
 
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         let isAuth = localStorage.getItem('token');
-        if(isAuth & isAuth!== 'undefined') {
+        if (isAuth & isAuth !== 'undefined') {
             navigate("/")
         }
     })
@@ -64,13 +65,13 @@ export default function Navbar() {
 
                 {/* <Typography>BLOG</Typography> */}
                 <Tabs textColor='inherit' value={value} onChange={(event, value) => { setValue(value) }}>
-                    <Tab label='Bài viết' href="/login"></Tab>
+                    <Tab label='Bài viết' href="/profile"></Tab>
                     <Tab label='Thảo luận'></Tab>
                     <Tab label='Hỏi đáp'></Tab>
                 </Tabs>
                 <Grid sx={{ display: 'flex', justifyContent: 'flex-end', marginLeft: 'auto' }}>
                     <TextField variant="outlined" size="small" placeholder="Tìm kiếm từ khóa..." sx={{ backgroundColor: 'white', borderRadius: 1 }}></TextField>
-                    <Button href="/search" variant="contained" size="small" sx={{ boxShadow: 'none', textTransform: 'initial' , backgroundColor: 'none !important' }}>
+                    <Button href="/search" variant="contained" size="small" sx={{ boxShadow: 'none', textTransform: 'initial', backgroundColor: 'none !important' }}>
                         <SearchIcon></SearchIcon>
                     </Button>
                     {!isLogin ?
@@ -131,17 +132,20 @@ export default function Navbar() {
                                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                             >
-                                <MenuItem onClick={handleClose}>
-                                    <Avatar /> Trang cá nhân
+                                <MenuItem onClick={() => { navigate("profile") }}>
+                                    <ListItemIcon>
+                                        <PersonIcon fontSize="small"></PersonIcon>
+                                    </ListItemIcon>
+                                    Trang cá nhân
                                 </MenuItem>
                                 <Divider />
-                                <MenuItem onClick={() => {localStorage.removeItem('token')}}>
+                                <MenuItem onClick={() => { localStorage.removeItem('token') }}>
                                     <ListItemIcon>
                                         <PersonAdd fontSize="small" />
                                     </ListItemIcon>
                                     Add another account
                                 </MenuItem>
-                                <MenuItem onClick={() => {navigate("/login")}} >
+                                <MenuItem onClick={() => { navigate("/login") }} >
                                     <ListItemIcon>
                                         <Settings fontSize="small" />
                                     </ListItemIcon>

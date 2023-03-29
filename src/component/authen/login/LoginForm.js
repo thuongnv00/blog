@@ -17,13 +17,13 @@ export default function LoginForm() {
     const [err, setErr] = useState(false)
     const navigate = useNavigate();
 
+  
     useEffect(()=> {
-        let isAuth = localStorage.getItem('token');
-        if(isAuth & isAuth!== 'undefined') {
+        let auth = localStorage.getItem('token');
+        if(auth && auth !== 'undefinded' ) {
             navigate("/")
         }
-    })
-
+    },[])
 
 
     const pages = [
@@ -119,7 +119,7 @@ export default function LoginForm() {
                     </Typography>
 
                     { err && <Typography style={{ display: "flex", justifyContent: "flex-end", fontSize: "14px",color:'red',paddingTop:20}}>
-                        <ErrorIcon></ErrorIcon>  Đăng nhập thất bại: Tên đăng nhập hoặc mật khẩu không chính xác!
+                        <ErrorIcon sx={{marginRight:'10px'}}></ErrorIcon>  Đăng nhập thất bại: Tên đăng nhập hoặc mật khẩu không chính xác!
                     </Typography>}
                     <br />
                 </Paper>

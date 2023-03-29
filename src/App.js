@@ -6,6 +6,7 @@ import SignupForm from './component/authen/signup/SignupForm';
 import Navbar from './component/web/header/Navbar';
 import SearchForm from './component/web/search/SearchForm';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import UserProfile from './component/web/userProfile/UserProfile';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/signup" Component={SignupForm} />
         <Route path="/login" Component={LoginForm} />
         <Route path="/search" Component={SearchForm} />
+        <Route path="/profile" Component={UserProfile} />
 
       </Routes>
     </BrowserRouter>

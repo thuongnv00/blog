@@ -1,10 +1,10 @@
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Button, Grid, Link, Modal, Paper, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { fontSize } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import Navbar from '../../web/header/Navbar';
 export default function SignupForm() {
 
@@ -25,6 +25,8 @@ export default function SignupForm() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const navigate = useNavigate()
     const style = {
         // position: 'absolute',
         // top: '50%',
@@ -39,6 +41,13 @@ export default function SignupForm() {
         paddingBottom: 5
 
     };
+
+    useEffect(()=> {
+        let auth = localStorage.getItem('token');
+        if(auth && auth !== 'undefined') {
+            navigate("/")
+        }
+    },[])
 
 
 
