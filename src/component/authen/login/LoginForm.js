@@ -112,7 +112,7 @@ export default function LoginForm() {
                     <Button type='submit' style={{ margin: "10px 0" }} fullWidth variant="contained" onClick={login}>Sign in</Button>
                     <Grid style={{ display: "flex", justifyContent: "flex-end" }}>
                         <Typography style={{ fontSize: "14px" }}>
-                            <Link href='/'>Forgot password</Link>
+                            <Link href='/resetPassword'>Forgot password</Link>
                         </Typography></Grid>
                     <Typography style={{ display: "flex", justifyContent: "flex-end", fontSize: "14px" }}>
                         <Link href='/signup'>Don't have an account yet? Let's signup</Link>

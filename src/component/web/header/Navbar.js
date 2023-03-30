@@ -22,9 +22,7 @@ export default function Navbar() {
 
 
     const theme = useTheme()
-    console.log(theme);
     const isMatch = useMediaQuery(theme.breakpoints.down('md'))
-    console.log(isMatch)
 
     const handleChange = (event) => {
         setAge(event.target.value);
