@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Box, Button, Container, Grid, List, ListItem, ListItemButton, Modal, Paper, styled, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Avatar, Box, Button, Container, Grid, List, ListItem, ListItemButton, Modal, Paper, Snackbar, Stack, styled, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Navbar from '../../header/Navbar'
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
@@ -18,7 +18,9 @@ export default function UserProfile() {
     const [data, setData] = useState('')
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [selectedImg, setSelectedImg] = useState('https://thumbs.dreamstime.com/z/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg')
+    const [selectedImg, setSelectedImg] = useState('')
+    const [avatar, setAvatar] = useState('')
+    const [isUpdate, setIsUpdate] = useState(false)
 
     const [username, setUsername] = useState('')
     const [openInfo, setOpenInfo] = useState(true)
@@ -32,7 +34,7 @@ export default function UserProfile() {
     let auth = localStorage.getItem('token')
 
     //update pass
-    const { success, result, updatePass, handleClose } = usePassword(auth)
+    const { success, fail, result, updatePass, handleFail, handleSuccess } = usePassword(auth)
     const [currentPass, setCurrentPass] = useState('')
     const [newPass, setNewPass] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
@@ -50,7 +52,8 @@ export default function UserProfile() {
     let showImg = (event) => {
         if (event.target.files.length !== 0) {
             setSelectedImg(URL.createObjectURL(event.target.files[0]));
-            console.log(selectedImg)
+            setAvatar(event.target.files[0])
+            console.log(avatar)
         }
 
     }
@@ -78,6 +81,7 @@ export default function UserProfile() {
                 setUsername(response.data.username);
                 setName(response.data.name);
                 setEmail(response.data.email);
+                setSelectedImg(response.data.avatar)
             })
             .catch((error) => {
                 console.log(error);
@@ -90,6 +94,7 @@ export default function UserProfile() {
         let data = new FormData();
         data.append('name', name);
         data.append('email', email);
+        data.append('file', avatar);
 
         let config = {
             method: 'put',
@@ -105,8 +110,7 @@ export default function UserProfile() {
         axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data));
-                alert('Cap nhat thanh cong');
-                reloadPage()
+                setIsUpdate(true);
             })
             .catch((error) => {
                 console.log(data);
@@ -130,6 +134,11 @@ export default function UserProfile() {
         if (event.target.name == 'confirmPass') {
             setConfirmPass(event.target.value)
         }
+    }
+
+    const handleCloses = () => {
+        setIsUpdate(false);
+        window.location.reload()
     }
 
     const Item = styled(Paper)(({ theme }) => ({
@@ -165,9 +174,71 @@ export default function UserProfile() {
         p: 4,
     };
 
+
+    const onClose = () => {
+        setIsUpdate(false);
+        window.location.reload();
+    }
+
     return (<>
         {/* <Navbar></Navbar> */}
-        <Container sx={{ marginTop: '50px' }}>
+        <Container sx={{ marginTop: '50px', display: 'flex', justifyContent: 'center' }}>
+            {/* {isUpdate && <div style={{ position: 'absolute', zIndex: '2000', top: '0px' }}>
+                <Stack sx={{ width: '600px' }} spacing={2}>
+                    <Alert severity="success" onClose={onClose}>
+                        <AlertTitle><strong>Success</strong> </AlertTitle>
+                        Cập nhật thông tin thành công!
+                    </Alert>
+                </Stack>
+            </div>} */}
+            {/* {success && <div style={{ position: 'absolute', zIndex: '2000', top: '0px' }}>
+                <Stack sx={{ width: '600px' }} spacing={2}>
+                    <Alert severity="success" onClose={handleSuccess}>
+                        <AlertTitle><strong>Success</strong> </AlertTitle>
+                        Cập nhật mật khẩu thành công!
+                    </Alert>
+                </Stack>
+            </div>} */}
+
+            {/* {(result.message && fail) &&
+                <div style={{ position: 'absolute', zIndex: '2000', top: '0px' }}>
+                    <Stack sx={{ width: '600px' }} spacing={2}>
+                        <Alert severity="error" onClose={handleFail}>
+                            <AlertTitle><strong>Lỗi xảy ra:</strong></AlertTitle>
+                            {result.message}
+                            </Alert>
+                    </Stack>
+                </div>} */}
+            <Snackbar open={isUpdate} autoHideDuration={4000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                onClose={onClose}>
+                <Alert onClose={onClose} severity="success" sx={{ width: '100%' }}>
+                        <AlertTitle><strong>Success</strong> </AlertTitle>
+                        Cập nhật thông tin thành công!
+
+                </Alert>
+            </Snackbar>
+
+            <Snackbar open={success} autoHideDuration={4000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                onClose={handleSuccess}>
+                <Alert onClose={handleSuccess} severity="success" sx={{ width: '100%' }}>
+                    <AlertTitle><strong>Success</strong> </AlertTitle>
+                    Cập nhật mật khẩu thành công!
+                </Alert>
+            </Snackbar>
+
+            <Snackbar open={fail} autoHideDuration={4000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                onClose={handleFail}>
+                <Alert onClose={handleFail} severity="error" sx={{ width: '100%' }}>
+                    <AlertTitle><strong>Lỗi xảy ra:</strong></AlertTitle>
+                    {result.message}
+                </Alert>
+            </Snackbar>
+
+
+
             <Grid container spacing={2} columns={16}>
                 <Grid item xs={4}>
                     <List>
@@ -202,7 +273,6 @@ export default function UserProfile() {
                                 <input hidden accept="image/*" type="file" onChange={showImg} />
                                 <Typography fontWeight='bold' color='blue' sx={{ marginRight: '10px' }}>Thay đổi ảnh đại diện</Typography>
                                 <PhotoCamera />
-
                             </IconButton>
 
                         </div>
@@ -224,6 +294,24 @@ export default function UserProfile() {
                         <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'flex-end' }}>
                             <Button onClick={reloadPage}>Hủy bỏ</Button>
                             <Button variant="contained" onClick={updateInfo}>Cập nhật</Button>
+                            {/* <Modal
+                                open={isUpdate}
+                                // onClose={handleCloses}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box sx={styleBox}>
+                                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                                        Cập nhật thông tin thành công!
+                                    </Typography>
+                                    {result.message && <Typography id="modal-modal-description" sx={{ mt: 2, color: 'green' }}>
+                                        {result.message}
+                                    </Typography>}
+                                    <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'flex-end' }}>
+                                        <Button variant="contained" onClick={handleClose}>Close</Button>
+                                    </div>
+                                </Box>
+                            </Modal> */}
                         </div>
                     </Box>
                 </Grid>
@@ -233,43 +321,42 @@ export default function UserProfile() {
                     <Box>
                         <div><Typography sx={{ color: "blue !important" }} variant="h5">Đổi mật khẩu</Typography></div>
 
-                        <div style={{ margin: '20px 0' }}>
+                        <div style={{ marginTop: '30px' }}>
                             <Typography>
+                                <span style={{ paddingRight: '5px', color: 'red' }}>*</span>
                                 Mật khẩu hiện tại
                             </Typography>
                             <TextField name="currentPass" size="small" variant="outlined" onChange={onChange}></TextField>
                         </div>
 
-                        <div style={{ margin: '20px 0' }}>
+                        <div style={{ marginTop: '30px' }}>
                             <Typography>
+                                <span style={{ paddingRight: '5px', color: 'red' }}>*</span>
                                 Mật khẩu mới
                             </Typography>
                             <TextField name="newPass" size="small" variant="outlined" onChange={onChange}></TextField>
                         </div>
                         {result.newPassword &&
-                            <div><Typography color='red' fontSize='14px'>{result.newPassword}</Typography></div>
+                            <div><Typography color='red' fontSize='12px'>{result.newPassword}</Typography></div>
                         }
 
-                        <div style={{ margin: '20px 0' }}>
+                        <div style={{ marginTop: '30px' }}>
                             <Typography>
+                                <span style={{ paddingRight: '5px', color: 'red' }}>*</span>
                                 Nhập lại mật khẩu mới
                             </Typography>
                             <TextField name="confirmPass" size="small" variant="outlined" onChange={onChange}></TextField>
                         </div>
-
                         {result.confirmPassword &&
-                            <div><Typography color='red' fontSize='14px'>{result.confirmPassword}</Typography></div>
+                            <div><Typography color='red' fontSize='12px'>{result.confirmPassword}</Typography></div>
                         }
 
-                        {result.message &&
-                            <div><Typography color='red' fontSize='14px'>{result.message}</Typography></div>
-                        }
+
 
                         <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'flex-start' }}>
-                            <Button onClick={reloadPage}>Hủy bỏ</Button>
-                            <Button variant="contained" onClick={() => { updatePass(currentPass, newPass, confirmPass) }}>Cập nhật</Button>
-
-                            <Modal
+                            <Button sx={{ textTransform: 'initial' }} onClick={reloadPage}>Hủy bỏ</Button>
+                            <Button variant="contained" sx={{ textTransform: 'initial' }} onClick={() => { updatePass(currentPass, newPass, confirmPass) }}>Đổi mật khẩu</Button>
+                            {/* <Modal
                                 open={success}
                                 onClose={handleClose}
                                 aria-labelledby="modal-modal-title"
@@ -277,18 +364,22 @@ export default function UserProfile() {
                             >
                                 <Box sx={styleBox}>
                                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                                        Cập nhật mật khẩu
+                                        Cập nhật tài khoản
                                     </Typography>
                                     {result.message && <Typography id="modal-modal-description" sx={{ mt: 2, color: 'green' }}>
                                         {result.message}
                                     </Typography>}
                                     <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'flex-end' }}>
-                                        <Button variant="contained" onClick={handleClose}>Close</Button>
+                                        <Button variant="contained" onClick={handleCloses}>Close</Button>
                                     </div>
                                 </Box>
-                            </Modal>
-
+                            </Modal> */}
                         </div>
+                        {/* <div>
+                            {(result.message && !success) &&
+                                <Typography color='red' fontSize='14px' sx={{ paddingTop: '50px' }}>{result.message}</Typography>
+                            }
+                        </div> */}
                     </Box>
                 </Grid>
                 }

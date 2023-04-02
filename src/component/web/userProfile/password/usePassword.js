@@ -3,15 +3,22 @@ import axios from "axios"
 export function usePassword(token) {
 
     const[success,setSuccess] = useState(false)
+    const[fail,setFail] = useState(false)
     const[result,setResult] = useState('')
 
-    const handleClose=()=> {
+    const handleFail=()=> {
+        setFail(false);
+        // window.location.reload()
+    }
+
+    const handleSuccess=()=> {
         setSuccess(false);
         window.location.reload()
     }
 
     let updatePass = (currentPass,newPass,confirmPass) => {
-        setSuccess(false)
+        setSuccess(false);
+        setFail(false);
         let data = JSON.stringify({
             "oldPassword": currentPass,
             "newPassword": newPass,
@@ -35,18 +42,20 @@ export function usePassword(token) {
             .then((response) => {
                 console.log(JSON.stringify(response.data));
                 if(response.data.status ===200) {
-                    setSuccess(true)
-                    setResult(response.data)
+                    setSuccess(true);
+                    setFail(false)
+                    setResult(response.data);
                 }
             })
             .catch((error) => {
                 console.log(error.response.status);
                 setResult(error.response.data);
-                setSuccess(false)
+                setFail(true)
+                setSuccess(false);
             });
 
     }
 
-    return {success,result,updatePass,handleClose}
+    return {success,fail,result,updatePass,handleFail,handleSuccess}
 }
 
