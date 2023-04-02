@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Box, Button, Container, Divider, FormControl, Grid, IconButton, InputLabel, ListItemIcon, Menu, MenuItem, Select, Tab, Tabs, TextField, Toolbar, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { AppBar, Avatar, Box, Button, Container, Divider, Drawer, FormControl, Grid, IconButton, InputLabel, List, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Select, Tab, Tabs, TextField, Toolbar, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 import React, { useEffect, useState } from "react";
 import DrawComponent from "./DrawComponent";
@@ -8,6 +8,7 @@ import avatar from '../header/man.png'
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 import PersonIcon from '@mui/icons-material/Person';
+import MenuIcon from '@mui/icons-material/Menu';
 
 
 
@@ -51,6 +52,29 @@ export default function Navbar() {
             navigate("/")
         }
     })
+
+    const DrawComponentt = () => {
+
+        const [openDrawer, setOpenDrawer] = useState(false)
+        const pages = ['Trang chủ', 'Bài viết', 'Thảo luận', 'Hỏi đáp', 'Đăng ký', 'Tìm kiếm']
+        return (<>
+            <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+                <List>
+                    {pages.map((item, index) => {
+                        return <ListItemButton key={index}>
+                            <ListItemIcon>
+                                <ListItemText>{item}</ListItemText>
+                            </ListItemIcon>
+                        </ListItemButton>
+                    })}
+
+                </List>
+            </Drawer>
+            <IconButton sx={{ color: 'white' }} onClick={() => setOpenDrawer(!openDrawer)}>
+                <MenuIcon ></MenuIcon>
+            </IconButton>
+        </>)
+    }
 
 
 
@@ -164,7 +188,7 @@ export default function Navbar() {
             </Toolbar>}
             {isMatch && <>
                 <Toolbar>
-                    <DrawComponent></DrawComponent>
+                    <DrawComponentt></DrawComponentt>
                     <Typography sx={{ margin: '0 auto' }}><MenuBookOutlinedIcon></MenuBookOutlinedIcon></Typography>
                 </Toolbar>
             </>}
