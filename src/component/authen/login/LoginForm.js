@@ -67,7 +67,7 @@ export default function LoginForm() {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://blog-dev-23.herokuapp.com/api/auth/signin',
+            url: 'http://localhost:8080/api/auth/signin',
             headers: {
                 'Content-Type': 'application/json'
             },

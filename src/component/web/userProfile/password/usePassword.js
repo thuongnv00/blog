@@ -30,7 +30,7 @@ export function usePassword(token) {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://blog-dev-23.herokuapp.com/resetPassword/user/updatePassword',
+            url: 'http://localhost:8080/resetPassword/user/updatePassword',
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'

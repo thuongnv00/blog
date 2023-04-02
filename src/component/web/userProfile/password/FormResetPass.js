@@ -42,7 +42,7 @@ export default function FormResetPass() {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://blog-dev-23.herokuapp.com/resetPassword/user/changePassword/token=' + localStorage.getItem('passwordToken'),
+            url: 'http://localhost:8080/resetPassword/user/changePassword/token=' + localStorage.getItem('passwordToken'),
             headers: {
                 'Content-Type': 'application/json'
             },

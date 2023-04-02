@@ -67,7 +67,7 @@ export default function UserProfile() {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'https://blog-dev-23.herokuapp.com/api/auth',
+            url: 'http://localhost:8080/api/auth',
             headers: {
                 'Authorization': 'Bearer ' + auth,
                 'Content-Type': 'application/json'
@@ -99,7 +99,7 @@ export default function UserProfile() {
         let config = {
             method: 'put',
             maxBodyLength: Infinity,
-            url: 'https://blog-dev-23.herokuapp.com/api/auth/update',
+            url: 'http://localhost:8080/api/auth/update',
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': 'Bearer ' + auth
