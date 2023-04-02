@@ -20,7 +20,7 @@ const DrawComponent = () => {
 
             </List>
         </Drawer>
-        <IconButton sx={{ color: 'white'}} onClick={() => setOpenDrawer(!openDrawer)}>
+        <IconButton sx={{ color: 'black'}} onClick={() => setOpenDrawer(!openDrawer)}>
             <MenuIcon ></MenuIcon>
         </IconButton>
     </>)
