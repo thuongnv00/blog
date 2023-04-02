@@ -24,7 +24,7 @@ export default function ResetPassword() {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/resetPassword?email=' + email,
+            url: 'https://blog-dev-23.herokuapp.com/resetPassword?email=' + email,
             headers: {}
         };
 

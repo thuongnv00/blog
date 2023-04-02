@@ -90,7 +90,7 @@ export default function SignupForm() {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/api/auth/signup',
+            url: 'https://blog-dev-23.herokuapp.com/api/auth/signup',
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

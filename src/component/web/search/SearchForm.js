@@ -21,7 +21,7 @@ export default function SearchForm() {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/blog/search/?text=' + name,
+            url: 'https://blog-dev-23.herokuapp.com/blog/search/?text=' + name,
             headers: {}
         };
 

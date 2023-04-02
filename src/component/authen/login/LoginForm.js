@@ -1,4 +1,4 @@
-import '../signup/Test.css'
+
 import React, { useEffect, useState } from "react";
 import { red } from "@mui/material/colors";
 import { Avatar, Button, Checkbox, Container, FormControl, FormControlLabel, FormGroup, FormHelperText, Grid, Input, InputLabel, Link, Paper, TextField, Typography } from '@mui/material';
@@ -67,7 +67,7 @@ export default function LoginForm() {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/api/auth/signin',
+            url: 'https://blog-dev-23.herokuapp.com/api/auth/signin',
             headers: {
                 'Content-Type': 'application/json'
             },
