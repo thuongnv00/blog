@@ -76,6 +76,9 @@ export default function Navbar() {
         </>)
     }
 
+    const [openDrawer, setOpenDrawer] = useState(false)
+    const pages = ['Trang chủ', 'Bài viết', 'Thảo luận', 'Hỏi đáp', 'Đăng ký', 'Tìm kiếm']
+
 
 
     return (<>
@@ -188,7 +191,23 @@ export default function Navbar() {
             </Toolbar>}
             {isMatch && <>
                 <Toolbar>
-                    <DrawComponentt></DrawComponentt>
+                    <>
+                        <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+                            <List>
+                                {pages.map((item, index) => {
+                                    return <ListItemButton key={index}>
+                                        <ListItemIcon>
+                                            <ListItemText>{item}</ListItemText>
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                })}
+
+                            </List>
+                        </Drawer>
+                        <IconButton sx={{ color: 'white' }} onClick={() => setOpenDrawer(!openDrawer)}>
+                            <MenuIcon ></MenuIcon>
+                        </IconButton>
+                    </>
                     <Typography sx={{ margin: '0 auto' }}><MenuBookOutlinedIcon></MenuBookOutlinedIcon></Typography>
                 </Toolbar>
             </>}
