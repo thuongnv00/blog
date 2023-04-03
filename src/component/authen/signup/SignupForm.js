@@ -3,7 +3,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Button, Grid, LinearProgress, Link, Modal, Paper, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { fontSize } from '@mui/system';
 import { redirect, useNavigate } from 'react-router-dom';
 import Navbar from '../../web/header/Navbar';
 import IconButton from '@mui/material/IconButton';
@@ -72,9 +71,9 @@ export default function SignupForm() {
         }
     }
 
-    let paperStyle = { width: "350px", height: "80vh", padding: "20px" }
+    let paperStyle = { width: "350px", height: "620px", padding: "20px" }
     let avatarStyle = { backgroundColor: "#9c27b0", marginBottom: "10px" }
-    let fieldStyle = { paddingBottom: "20px" }
+    let fieldStyle = { paddingBottom: "10px" }
 
     let signUp = () => {
         setExistUserOrMail(false)
@@ -155,7 +154,7 @@ export default function SignupForm() {
     if (!success) {
         return (<>
             <Navbar></Navbar>
-            <Grid sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+            <Grid sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center',marginTop:'50px' }}>
                 <Paper style={paperStyle} elevation={3}  >
                     <Grid align="center">
                         <Avatar style={avatarStyle}><LockOutlinedIcon></LockOutlinedIcon></Avatar>
@@ -170,10 +169,10 @@ export default function SignupForm() {
                             </IconButton>
 
                         </div>
-                        <TextField name="name" required style={fieldStyle} label="Name" variant="standard" placeholder='Enter name...' fullWidth onChange={handleInput} />
-                        <TextField name="username" required style={fieldStyle} label="Username" variant="standard" placeholder='Enter username...' fullWidth onChange={handleInput} />
-                        <TextField name="email" required style={fieldStyle} label="Email" variant="standard" placeholder='Enter email...' fullWidth onChange={handleInput} />
-                        <TextField name="password" required style={fieldStyle} type="password" label="Password" variant="standard" placeholder='Enter password...' fullWidth onChange={handleInput} />
+                        <TextField name="name" size='small' required style={fieldStyle} label="Name" variant="standard" placeholder='Enter name...' fullWidth onChange={handleInput} />
+                        <TextField name="username" size='small' required style={fieldStyle} label="Username" variant="standard" placeholder='Enter username...' fullWidth onChange={handleInput} />
+                        <TextField name="email" size='small' required style={fieldStyle} label="Email" variant="standard" placeholder='Enter email...' fullWidth onChange={handleInput} />
+                        <TextField name="password" size='small' required style={fieldStyle} type="password" label="Password" variant="standard" placeholder='Enter password...' fullWidth onChange={handleInput} />
                     </Grid>
                     <Button onClick={signUp} style={{ margin: "20px 0px" }} variant="contained" fullWidth>Sign up</Button>
                     {(progress && !existUserOrMail) && <Box>

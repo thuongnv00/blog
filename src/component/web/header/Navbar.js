@@ -1,10 +1,9 @@
 import { AppBar, Avatar, Box, Button, Container, Divider, FormControl, Grid, IconButton, InputLabel, ListItemIcon, Menu, MenuItem, Select, Tab, Tabs, TextField, Toolbar, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import DrawComponent from "./DrawComponent";
 import SearchIcon from '@mui/icons-material/Search';
-import '../header/Navbar.css'
-import avatar from '../header/man.png'
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 import PersonIcon from '@mui/icons-material/Person';
@@ -14,19 +13,39 @@ import PersonIcon from '@mui/icons-material/Person';
 export default function Navbar() {
 
     const [value, setValue] = useState(0)
-    const [age, setAge] = useState('');
     const [param, setParam] = useState('');
     const [isLogin, setIsLogin] = useState(localStorage.getItem('token'))
+    const [avatar,setAvatar] = useState('')
 
     const navigate = useNavigate()
-
-
     const theme = useTheme()
     const isMatch = useMediaQuery(theme.breakpoints.down('md'))
+    const auth = localStorage.getItem('token')
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+    useEffect(()=> {
+        getInfo();
+    },[auth])
+
+    const getInfo = () => {
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:8080/api/auth',
+            headers: {
+                'Authorization': 'Bearer ' + auth,
+                'Content-Type': 'application/json'
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                setAvatar(response.data.avatar);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -52,15 +71,18 @@ export default function Navbar() {
         }
     })
 
-    
+    const styleToolbar = {
+        backgroundColor: 'white',
+        boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)'
+    }
 
 
 
     return (<>
         <Container sx={{ boxShadow: 'none', height: '64px' }}>
-            {!isMatch && <Toolbar sx={{}}>
+            {!isMatch && <Toolbar sx={styleToolbar}>
                 <Link style={{ color: 'black' }} to='/'>
-                    <MenuBookOutlinedIcon style={{ marginRight: 10 }}></MenuBookOutlinedIcon>
+                    <MenuBookOutlinedIcon style={{ marginRight: '50px',width:'50px',height:'50px' }}></MenuBookOutlinedIcon>
                 </Link>
 
                 {/* <Typography>BLOG</Typography> */}
@@ -75,7 +97,7 @@ export default function Navbar() {
                         <SearchIcon></SearchIcon>
                     </Button>
                     {!isLogin ?
-                        <Button href="/login" sx={{ boxShadow: 'none', textTransform: 'initial' }} size="small" variant="contained">Đăng ký/Đăng nhập</Button>
+                        <Button href="/login" sx={{ boxShadow: 'none', textTransform: 'initial', backgroundColor: 'white', color: 'blue', boxShadow: 'none !important', '&:hover': { backgroundColor: '#ffffff' } }} size="small" variant="contained">Đăng ký/Đăng nhập</Button>
                         :
                         // :<Avatar
                         //     alt="Remy Sharp"
@@ -93,7 +115,7 @@ export default function Navbar() {
                                         aria-haspopup="true"
                                         aria-expanded={open ? 'true' : undefined}
                                     >
-                                        <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                                        <Avatar src={avatar} sx={{ width: 32, height: 32 }}></Avatar>
                                     </IconButton>
                                 </Tooltip>
                             </Box>
@@ -165,9 +187,9 @@ export default function Navbar() {
                 </Grid>
             </Toolbar>}
             {isMatch && <>
-                <Toolbar>
+                <Toolbar sx={styleToolbar}>
                     <DrawComponent></DrawComponent>
-                    <Typography sx={{ margin: '0 auto' }}><MenuBookOutlinedIcon></MenuBookOutlinedIcon></Typography>
+                    <Typography sx={{ margin: '0 auto' }}><MenuBookOutlinedIcon sx={{width:'50px', height:'50px'}}/></Typography>
                 </Toolbar>
             </>}
             <Outlet></Outlet>

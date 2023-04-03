@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Alert, AlertTitle, Avatar, Box, Button, Container, Grid, List, ListItem, ListItemButton, Modal, Paper, Snackbar, Stack, styled, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Alert, AlertTitle, Avatar, Box, Button, Container, Grid, LinearProgress, List, ListItem, ListItemButton, Modal, Paper, Snackbar, Stack, styled, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Navbar from '../../header/Navbar'
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import '../user/userProfile.css'
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import HomeIcon from '@mui/icons-material/Home';
 import { usePassword } from "../password/usePassword";
@@ -21,6 +20,7 @@ export default function UserProfile() {
     const [selectedImg, setSelectedImg] = useState('')
     const [avatar, setAvatar] = useState('')
     const [isUpdate, setIsUpdate] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const [username, setUsername] = useState('')
     const [openInfo, setOpenInfo] = useState(true)
@@ -90,6 +90,7 @@ export default function UserProfile() {
 
     //update info
     const updateInfo = () => {
+        setLoading(true);
         const FormData = require('form-data');
         let data = new FormData();
         data.append('name', name);
@@ -111,8 +112,10 @@ export default function UserProfile() {
             .then((response) => {
                 console.log(JSON.stringify(response.data));
                 setIsUpdate(true);
+                setLoading(false);
             })
             .catch((error) => {
+                setLoading(false);
                 console.log(data);
             });
     }
@@ -174,6 +177,13 @@ export default function UserProfile() {
         p: 4,
     };
 
+    const styleCancel = {
+        textTransform: 'initial',
+        marginRight: '5px !important',
+        boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12) !important'
+
+    }
+
 
     const onClose = () => {
         setIsUpdate(false);
@@ -213,8 +223,8 @@ export default function UserProfile() {
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 onClose={onClose}>
                 <Alert onClose={onClose} severity="success" sx={{ width: '100%' }}>
-                        <AlertTitle><strong>Success</strong> </AlertTitle>
-                        Cập nhật thông tin thành công!
+                    <AlertTitle><strong>Success</strong> </AlertTitle>
+                    Cập nhật thông tin thành công!
 
                 </Alert>
             </Snackbar>
@@ -263,13 +273,13 @@ export default function UserProfile() {
                     </List>
                 </Grid>
 
-                {openInfo && <Grid item xs={12}>
+                {openInfo && <Grid item xs={8}>
                     <Box>
                         <Typography variant="h5">Thông tin cá nhân</Typography>
                         <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
                             <Avatar sx={{ width: '100px', height: '100px', margin: "20px auto" }} src={selectedImg}>
                             </Avatar>
-                            <IconButton aria-label="upload picture" component="label">
+                            <IconButton aria-label="upload picture" component="label" sx={{'&:hover':{backgroundColor:'white'}}}>
                                 <input hidden accept="image/*" type="file" onChange={showImg} />
                                 <Typography fontWeight='bold' color='blue' sx={{ marginRight: '10px' }}>Thay đổi ảnh đại diện</Typography>
                                 <PhotoCamera />
@@ -290,10 +300,15 @@ export default function UserProfile() {
                             <Typography>Email đăng ký</Typography>
                             <TextField name="email" size="small" fullWidth value={email} onChange={onChange}></TextField>
                         </div>
+                        {loading && <div style={{display:'flex',justifyContent:'center'}}>
+                            <Box  sx={{ width: '200px' }}>
+                                <LinearProgress />
+                            </Box>
+                        </div>}
 
                         <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button onClick={reloadPage}>Hủy bỏ</Button>
-                            <Button variant="contained" onClick={updateInfo}>Cập nhật</Button>
+                            <Button sx={styleCancel} onClick={reloadPage}>Hủy bỏ</Button>
+                            <Button variant="contained" sx={{textTransform:'initial'}} onClick={updateInfo}>Cập nhật</Button>
                             {/* <Modal
                                 open={isUpdate}
                                 // onClose={handleCloses}
@@ -354,7 +369,7 @@ export default function UserProfile() {
 
 
                         <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'flex-start' }}>
-                            <Button sx={{ textTransform: 'initial' }} onClick={reloadPage}>Hủy bỏ</Button>
+                            <Button sx={styleCancel} onClick={reloadPage}>Hủy bỏ</Button>
                             <Button variant="contained" sx={{ textTransform: 'initial' }} onClick={() => { updatePass(currentPass, newPass, confirmPass) }}>Đổi mật khẩu</Button>
                             {/* <Modal
                                 open={success}

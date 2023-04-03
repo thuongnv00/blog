@@ -42,7 +42,7 @@ export default function LoginForm() {
     ];
 
 
-    const paperStyle = { width: 350, padding: '40px' }
+    const paperStyle = { width: 350, padding: '40px',margin:'50px 0' }
     const avatarStyle = { backgroundColor: "green" }
 
     let fieldStyle = { paddingBottom: "20px" }
@@ -98,7 +98,7 @@ export default function LoginForm() {
     return (<>
         <Navbar></Navbar>
         <Container>
-            <Grid sx={{ backgroundColor: 'white', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Grid sx={{ backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Paper elevation={3} style={paperStyle} >
                     <Grid align="center">
                         <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>

@@ -6,14 +6,38 @@ import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 const DrawComponent = () => {
 
     const [openDrawer, setOpenDrawer] = useState(false)
-    const pages = ['Trang chủ', 'Bài viết', 'Thảo luận', 'Hỏi đáp','Đăng ký','Tìm kiếm']
+    const pages = [
+    {
+        badge:'Trang chủ',
+        navigate:'/'
+    },
+    {
+        badge:'Bài viết',
+        navigate:'/follow'
+    },
+    {
+        badge:'Thảo luận',
+        navigate:'/discuss'
+    },
+    {
+        badge:'Hỏi đáp',
+        navigate:'/question'
+    },
+    {
+        badge:'Đăng ký',
+        navigate:'/login'
+    },
+    {
+        badge:'Tìm kiếm',
+        navigate:'/search'
+    }]
     return (<>
         <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
             <List>
                 {pages.map((item, index) => {
-                    return <ListItemButton key={index}>
+                    return <ListItemButton key={index} href={item.navigate}>
                         <ListItemIcon>
-                            <ListItemText>{item}</ListItemText>
+                            <ListItemText>{item.badge}</ListItemText>
                         </ListItemIcon>
                     </ListItemButton>
                 })}
