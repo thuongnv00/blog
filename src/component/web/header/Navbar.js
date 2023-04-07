@@ -97,7 +97,7 @@ export default function Navbar() {
                         <SearchIcon></SearchIcon>
                     </Button>
                     {!isLogin ?
-                        <Button href="/login" sx={{ boxShadow: 'none', textTransform: 'initial', backgroundColor: 'white', color: 'blue', boxShadow: 'none !important', '&:hover': { backgroundColor: '#ffffff' } }} size="small" variant="contained">Đăng ký/Đăng nhập</Button>
+                        <Button href="/login" sx={{textTransform: 'initial', backgroundColor: 'white', color: 'blue', boxShadow: 'none !important', '&:hover': { backgroundColor: '#ffffff' } }} size="small" variant="contained">Đăng ký/Đăng nhập</Button>
                         :
                         // :<Avatar
                         //     alt="Remy Sharp"
